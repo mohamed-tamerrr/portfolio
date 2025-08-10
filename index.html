@@ -5,159 +5,740 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mohamed Tamer - Portfolio</title>
     <style>
-      body {
+      * {
         margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #0d1117;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0a0a 0%,
+          #1a1a2e 50%,
+          #16213e 100%
+        );
         color: #e6edf3;
         scroll-behavior: smooth;
+        overflow-x: hidden;
+        line-height: 1.6;
       }
+
+      /* Animated background particles */
+      .bg-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background: rgba(88, 166, 255, 0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.3;
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+          opacity: 0.8;
+        }
+      }
+
+      /* Header with glassmorphism */
       header {
         position: fixed;
         top: 0;
         width: 100%;
-        background-color: #161b22;
+        background: rgba(22, 27, 34, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(88, 166, 255, 0.2);
         padding: 15px 0;
         text-align: center;
         z-index: 1000;
+        transition: all 0.3s ease;
       }
-      header a {
-        color: #58a6ff;
-        margin: 0 15px;
+
+      header.scrolled {
+        background: rgba(13, 17, 23, 0.95);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+      }
+
+      nav a {
+        color: #e6edf3;
         text-decoration: none;
-        font-weight: bold;
+        font-weight: 500;
+        font-size: 1rem;
+        position: relative;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
       }
-      header a:hover {
-        color: #1f6feb;
+
+      nav a::before {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #58a6ff, #1f6feb);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
       }
-      section {
-        padding: 100px 20px;
-        max-width: 900px;
-        margin: auto;
-        text-align: center;
-      }
-      h1,
-      h2 {
+
+      nav a:hover {
         color: #58a6ff;
+        background: rgba(88, 166, 255, 0.1);
       }
+
+      nav a:hover::before {
+        width: 100%;
+      }
+
+      /* Sections */
+      section {
+        padding: 120px 20px 80px;
+        max-width: 1200px;
+        margin: auto;
+        position: relative;
+      }
+
+      /* Home section with hero design */
+      #home {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .hero-content {
+        z-index: 2;
+        max-width: 800px;
+      }
+
       .profile-pic {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 20px;
-        border: 3px solid #58a6ff;
+        margin-bottom: 30px;
+        border: 4px solid transparent;
+        background: linear-gradient(45deg, #58a6ff, #1f6feb, #7c3aed, #ec4899);
+        background-clip: border-box;
+        padding: 4px;
+        animation: pulse 3s ease-in-out infinite;
+        transition: transform 0.3s ease;
       }
-      .skills,
-      .projects {
+
+      .profile-pic:hover {
+        transform: scale(1.05) rotate(5deg);
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 20px rgba(88, 166, 255, 0);
+        }
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #58a6ff, #7c3aed, #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: slideInUp 0.8s ease-out;
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+        color: #8b949e;
+        margin-bottom: 40px;
+        animation: slideInUp 0.8s ease-out 0.2s both;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: slideInUp 0.8s ease-out 0.4s both;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #58a6ff, #1f6feb);
+        color: white;
+      }
+
+      .btn-secondary {
+        border: 2px solid #58a6ff;
+        color: #58a6ff;
+        background: transparent;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(88, 166, 255, 0.3);
+      }
+
+      .btn-secondary:hover {
+        background: #58a6ff;
+        color: white;
+      }
+
+      /* Animated typing effect */
+      .typing-text::after {
+        content: '|';
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        50% {
+          opacity: 1;
+        }
+        51%,
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* About section */
+      #about {
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #58a6ff, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, #58a6ff, #7c3aed);
+        transform: translateX(-50%);
+        border-radius: 2px;
+      }
+
+      .about-content {
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        color: #c9d1d9;
+        line-height: 1.8;
+      }
+
+      /* Skills section */
+      #skills {
+        text-align: center;
+      }
+
+      .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .skill-card {
+        background: rgba(22, 27, 34, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(88, 166, 255, 0.2);
+        padding: 30px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(88, 166, 255, 0.1),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .skill-card:hover::before {
+        left: 100%;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-10px);
+        border-color: #58a6ff;
+        box-shadow: 0 20px 40px rgba(88, 166, 255, 0.2);
+      }
+
+      .skill-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .skill-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #e6edf3;
+      }
+
+      /* Contact section */
+      #contact {
+        text-align: center;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .contact-item {
+        background: rgba(22, 27, 34, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(88, 166, 255, 0.2);
+        padding: 25px;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
         gap: 20px;
       }
-      .card {
-        background-color: #161b22;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(88, 166, 255, 0.1);
+
+      .contact-item:hover {
+        transform: translateY(-5px);
+        border-color: #58a6ff;
+        box-shadow: 0 15px 30px rgba(88, 166, 255, 0.2);
       }
+
+      .contact-icon {
+        font-size: 2rem;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .phone-icon {
+        background: linear-gradient(45deg, #ff8a65, #ff7043);
+      }
+      .email-icon {
+        background: linear-gradient(45deg, #ffca28, #ffa726);
+      }
+      .linkedin-icon {
+        background: linear-gradient(45deg, #9575cd, #7e57c2);
+      }
+      .github-icon {
+        background: linear-gradient(45deg, #64b5f6, #42a5f5);
+      }
+
+      .contact-info {
+        text-align: left;
+        flex-grow: 1;
+      }
+
+      .contact-label {
+        font-weight: 600;
+        color: #58a6ff;
+        margin-bottom: 5px;
+      }
+
+      .contact-value a {
+        color: #e6edf3;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-value a:hover {
+        color: #58a6ff;
+      }
+
+      /* Footer */
       footer {
         text-align: center;
-        padding: 20px;
-        background-color: #161b22;
+        padding: 40px 20px;
+        background: rgba(13, 17, 23, 0.8);
+        border-top: 1px solid rgba(88, 166, 255, 0.2);
+        margin-top: 80px;
       }
-      a.button {
-        display: inline-block;
-        padding: 10px 20px;
-        background: #238636;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        margin-top: 10px;
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.2rem;
+        }
+
+        nav {
+          gap: 20px;
+        }
+
+        nav a {
+          font-size: 0.9rem;
+          padding: 6px 12px;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .contact-item {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .contact-info {
+          text-align: center;
+        }
       }
-      a.button:hover {
-        background: #2ea043;
+
+      /* Scroll animations */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
   </head>
   <body>
-    <header>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+    <!-- Animated background -->
+    <div class="bg-particles"></div>
+
+    <header id="header">
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </header>
 
     <section id="home">
-      <img
-        src="IMG_20250717_161725.jpg"
-        alt="Mohamed Tamer"
-        class="profile-pic"
-      />
-      <h1>Hi, I'm Mohamed Tamer 👋</h1>
-      <p>Computer Science Student | Flutter Developer</p>
-    </section>
-
-    <section id="about">
-      <h2>About Me</h2>
-      <p>
-        I'm a second-year Computer Science student at NMU, currently focusing on
-        Flutter, Python, and databases. I enjoy building mobile apps and
-        connecting them to backend systems.
-      </p>
-    </section>
-
-    <section id="skills">
-      <h2>Skills</h2>
-      <div class="skills">
-        <div class="card">Flutter & Dart</div>
-        <div class="card">Python</div>
-        <div class="card">Machine Learning</div>
-        <div class="card">SQL & Databases</div>
-        <div class="card">Git & GitHub</div>
+      <div class="hero-content">
+        <img
+          src="IMG_20250717_161725.jpg"
+          alt="Mohamed Tamer"
+          class="profile-pic"
+        />
+        <h1 class="hero-title">Hi, I'm Mohamed Tamer 👋</h1>
+        <p class="hero-subtitle">
+          Computer Science Student |
+          <span class="typing-text">Flutter Developer</span>
+        </p>
+        <div class="cta-buttons">
+          <a href="#contact" class="btn btn-primary">Get In Touch</a>
+          <a href="#about" class="btn btn-secondary">Learn More</a>
+        </div>
       </div>
     </section>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="projects">
-        <div class="card">
-          <h3>Quiz App</h3>
-          <p>Flutter app with MySQL backend.</p>
-          <a class="button" href="#">View</a>
+    <section id="about">
+      <h2 class="section-title fade-in">About Me</h2>
+      <div class="about-content fade-in">
+        <p>
+          I'm a passionate second-year Computer Science student at NMU with a
+          deep love for mobile development and cutting-edge technology. My
+          journey in programming has led me to specialize in Flutter
+          development, Python, and database management. I thrive on creating
+          intuitive mobile applications and building robust backend systems that
+          solve real-world problems.
+        </p>
+        <br />
+        <p>
+          When I'm not coding, you'll find me exploring the latest trends in
+          machine learning, contributing to open-source projects, or
+          brainstorming innovative solutions to complex challenges. I believe in
+          continuous learning and staying ahead of the technological curve.
+        </p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title fade-in">Skills & Expertise</h2>
+      <div class="skills-grid">
+        <div class="skill-card fade-in">
+          <div class="skill-icon">📱</div>
+          <div class="skill-name">Flutter & Dart</div>
         </div>
-        <div class="card">
-          <h3>Speech Emotion Recognition</h3>
-          <p>Machine Learning + Flutter + Database.</p>
-          <a class="button" href="#">View</a>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🐍</div>
+          <div class="skill-name">Python</div>
         </div>
-        <div class="card">
-          <h3>Fake News Detection</h3>
-          <p>Flask API integrated with Flutter.</p>
-          <a class="button" href="#">View</a>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🧠</div>
+          <div class="skill-name">Machine Learning</div>
+        </div>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🗄️</div>
+          <div class="skill-name">SQL & Databases</div>
+        </div>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🔗</div>
+          <div class="skill-name">Git & GitHub</div>
         </div>
       </div>
     </section>
 
     <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:xxtamerzz@gmail.com">xxtamerzz@gmail.com</a></p>
-      <p>
-        LinkedIn:
-        <a href="https://www.linkedin.com/in/mohamed-tamer" target="_blank"
-          >linkedin.com/in/mohamed-tamer</a
-        >
-      </p>
-      <p>
-        GitHub:
-        <a href="https://github.com/yourusername" target="_blank"
-          >github.com/yourusername</a
-        >
-      </p>
+      <h2 class="section-title fade-in">Let's Connect</h2>
+      <div class="contact-grid">
+        <div class="contact-item fade-in">
+          <div class="contact-icon phone-icon">📞</div>
+          <div class="contact-info">
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">
+              <a href="tel:+201090572123">+20 109 057 2123</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item fade-in">
+          <div class="contact-icon email-icon">📧</div>
+          <div class="contact-info">
+            <div class="contact-label">Email</div>
+            <div class="contact-value">
+              <a href="mailto:mohamed.tamerrr79@gmail.com"
+                >mohamed.tamerrr79@gmail.com</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item fade-in">
+          <div class="contact-icon linkedin-icon">💼</div>
+          <div class="contact-info">
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">
+              <a
+                href="https://www.linkedin.com/in/mohamed-tamerrr"
+                target="_blank"
+                >linkedin.com/in/mohamed-tamerrr</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item fade-in">
+          <div class="contact-icon github-icon">💻</div>
+          <div class="contact-info">
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">
+              <a href="https://github.com/mohamed-tamerrr" target="_blank"
+                >github.com/mohamed-tamerrr</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <footer>
-      <p>© 2025 Mohamed Tamer. All Rights Reserved.</p>
+      <p>© 2025 Mohamed Tamer. Crafted with passion and code. ✨</p>
     </footer>
+
+    <script>
+      // Create animated particles
+      function createParticles() {
+        const container = document.querySelector('.bg-particles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+
+          const size = Math.random() * 4 + 1;
+          const x = Math.random() * window.innerWidth;
+          const y = Math.random() * window.innerHeight;
+          const delay = Math.random() * 6;
+
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          particle.style.animationDelay = `${delay}s`;
+
+          container.appendChild(particle);
+        }
+      }
+
+      // Header scroll effect
+      function handleScroll() {
+        const header = document.getElementById('header');
+        if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+
+      // Fade in animations
+      function animateOnScroll() {
+        const elements = document.querySelectorAll('.fade-in');
+        const windowHeight = window.innerHeight;
+
+        elements.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+
+          if (elementTop < windowHeight - 100) {
+            element.classList.add('visible');
+          }
+        });
+      }
+
+      // Typing effect
+      function typeWriter() {
+        const texts = [
+          'Flutter Developer',
+          'Mobile App Creator',
+          'Python Enthusiast',
+          'Problem Solver',
+        ];
+        const typingElement = document.querySelector('.typing-text');
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+          const currentText = texts[textIndex];
+
+          if (isDeleting) {
+            typingElement.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+          } else {
+            typingElement.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+          }
+
+          let typeSpeed = isDeleting ? 50 : 100;
+
+          if (!isDeleting && charIndex === currentText.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            typeSpeed = 500;
+          }
+
+          setTimeout(type, typeSpeed);
+        }
+
+        type();
+      }
+
+      // Smooth scrolling for navigation links
+      function initSmoothScrolling() {
+        document.querySelectorAll('nav a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          });
+        });
+      }
+
+      // Initialize everything
+      document.addEventListener('DOMContentLoaded', function () {
+        createParticles();
+        typeWriter();
+        animateOnScroll();
+        initSmoothScrolling();
+
+        window.addEventListener('scroll', () => {
+          handleScroll();
+          animateOnScroll();
+        });
+
+        // Initial animation trigger
+        setTimeout(animateOnScroll, 100);
+      });
+    </script>
   </body>
 </html>
