@@ -182,6 +182,27 @@
         color: #8b949e;
         margin-bottom: 40px;
         animation: slideInUp 0.8s ease-out 0.2s both;
+        /* Fix for mobile line wrapping */
+        min-height: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      /* Mobile-friendly subtitle layout */
+      .subtitle-line {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .typing-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
       }
 
       .cta-buttons {
@@ -440,7 +461,21 @@
         }
 
         .hero-subtitle {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
+          margin-bottom: 30px;
+          /* Better mobile spacing */
+          min-height: auto;
+          gap: 4px;
+        }
+
+        /* Stack subtitle elements on mobile */
+        .subtitle-line {
+          font-size: 1rem;
+        }
+
+        .typing-container {
+          flex-direction: column;
+          gap: 4px;
         }
 
         nav {
@@ -468,6 +503,36 @@
 
         .contact-info {
           text-align: center;
+        }
+
+        .skills-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        section {
+          padding: 100px 15px 60px;
+        }
+      }
+
+      /* Extra small screens */
+      @media (max-width: 480px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+
+        .profile-pic {
+          width: 150px;
+          height: 150px;
+        }
+
+        .btn {
+          padding: 10px 25px;
+          font-size: 0.9rem;
         }
       }
 
@@ -505,10 +570,12 @@
           class="profile-pic"
         />
         <h1 class="hero-title">Hi, I'm Mohamed Tamer 👋</h1>
-        <p class="hero-subtitle">
-          Computer Science Student |
-          <span class="typing-text">Flutter Developer</span>
-        </p>
+        <div class="hero-subtitle">
+          <div class="subtitle-line">Computer Science Student</div>
+          <div class="typing-container">
+            <span class="typing-text">Flutter Developer</span>
+          </div>
+        </div>
         <div class="cta-buttons">
           <a href="#contact" class="btn btn-primary">Get In Touch</a>
           <a href="#about" class="btn btn-secondary">Learn More</a>
@@ -520,19 +587,18 @@
       <h2 class="section-title fade-in">About Me</h2>
       <div class="about-content fade-in">
         <p>
-          I'm a passionate second-year Computer Science student at NMU with a
+          I'm a passionate third-year Computer Science student at NMU with a
           deep love for mobile development and cutting-edge technology. My
           journey in programming has led me to specialize in Flutter
-          development, Python, and database management. I thrive on creating
-          intuitive mobile applications and building robust backend systems that
-          solve real-world problems.
+          development. I thrive on creating intuitive mobile applications and
+          building robust systems that solve real-world problems.
         </p>
         <br />
         <p>
           When I'm not coding, you'll find me exploring the latest trends in
-          machine learning, contributing to open-source projects, or
-          brainstorming innovative solutions to complex challenges. I believe in
-          continuous learning and staying ahead of the technological curve.
+          technology, contributing to open-source projects, or brainstorming
+          innovative solutions to complex challenges. I believe in continuous
+          learning and staying ahead of the technological curve.
         </p>
       </div>
     </section>
@@ -545,16 +611,8 @@
           <div class="skill-name">Flutter & Dart</div>
         </div>
         <div class="skill-card fade-in">
-          <div class="skill-icon">🐍</div>
-          <div class="skill-name">Python</div>
-        </div>
-        <div class="skill-card fade-in">
-          <div class="skill-icon">🧠</div>
-          <div class="skill-name">Machine Learning</div>
-        </div>
-        <div class="skill-card fade-in">
-          <div class="skill-icon">🗄️</div>
-          <div class="skill-name">SQL & Databases</div>
+          <div class="skill-icon">🤖</div>
+          <div class="skill-name">Passion for AI</div>
         </div>
         <div class="skill-card fade-in">
           <div class="skill-icon">🔗</div>
@@ -624,7 +682,7 @@
       // Create animated particles
       function createParticles() {
         const container = document.querySelector('.bg-particles');
-        const particleCount = 50;
+        const particleCount = window.innerWidth < 768 ? 25 : 50; // Fewer particles on mobile
 
         for (let i = 0; i < particleCount; i++) {
           const particle = document.createElement('div');
@@ -674,7 +732,7 @@
         const texts = [
           'Flutter Developer',
           'Mobile App Creator',
-          'Python Enthusiast',
+          'AI Enthusiast',
           'Problem Solver',
         ];
         const typingElement = document.querySelector('.typing-text');
@@ -734,6 +792,12 @@
         window.addEventListener('scroll', () => {
           handleScroll();
           animateOnScroll();
+        });
+
+        window.addEventListener('resize', () => {
+          // Recreate particles on resize for better mobile experience
+          document.querySelector('.bg-particles').innerHTML = '';
+          createParticles();
         });
 
         // Initial animation trigger
