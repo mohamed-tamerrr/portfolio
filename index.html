@@ -370,6 +370,61 @@
         color: #e6edf3;
       }
 
+      /* Projects section */
+      #projects {
+        text-align: center;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .project-card {
+        background: rgba(22, 27, 34, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(88, 166, 255, 0.2);
+        padding: 30px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        text-align: left;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        border-color: #58a6ff;
+        box-shadow: 0 20px 40px rgba(88, 166, 255, 0.2);
+      }
+
+      .project-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #58a6ff;
+      }
+
+      .project-card p {
+        font-size: 1rem;
+        color: #c9d1d9;
+        margin-bottom: 15px;
+      }
+
+      .project-card a {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #58a6ff;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background 0.3s ease;
+      }
+
+      .project-card a:hover {
+        background: #1f6feb;
+      }
+
       /* Contact section */
       #contact {
         text-align: center;
@@ -505,7 +560,8 @@
           text-align: center;
         }
 
-        .skills-grid {
+        .skills-grid,
+        .projects-grid {
           grid-template-columns: 1fr;
           gap: 20px;
         }
@@ -558,6 +614,7 @@
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
@@ -617,6 +674,38 @@
         <div class="skill-card fade-in">
           <div class="skill-icon">🔗</div>
           <div class="skill-name">Git & GitHub</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title fade-in">My Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card fade-in">
+          <h3>Chat-App</h3>
+          <p>
+            A real-time chat application demonstrating proficiency in real-time
+            data handling. Features include instant messaging, user
+            authentication.
+          </p>
+          <a
+            href="https://github.com/mohamed-tamerrr/Chat-App.git"
+            target="_blank"
+            >View on GitHub</a
+          >
+        </div>
+        <div class="project-card fade-in">
+          <h3>Responsive Dashboard</h3>
+          <p>
+            A sleek, fully responsive dashboard built with Flutter. It provides
+            a clean, modern interface for data visualization and management,
+            adapting seamlessly to all screen sizes from mobile to desktop.
+          </p>
+          <a
+            href="https://github.com/mohamed-tamerrr/Responsive-Dash-Board.git"
+            target="_blank"
+            >View on GitHub</a
+          >
         </div>
       </div>
     </section>
@@ -729,12 +818,7 @@
 
       // Typing effect
       function typeWriter() {
-        const texts = [
-          'Flutter Developer',
-          'Mobile App Creator',
-          'AI Enthusiast',
-          'Problem Solver',
-        ];
+        const texts = ['Flutter Developer', 'AI Enthusiast', 'Problem Solver'];
         const typingElement = document.querySelector('.typing-text');
         let textIndex = 0;
         let charIndex = 0;
